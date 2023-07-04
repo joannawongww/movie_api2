@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>myFlix</title>
+</head>
+
+<body>
+    <h1>Welcome to myFlix!</h1>
+    <p>We will provide you information on the different movies, directors and genres!
+    </p>
+    <p>You may choose to sign up with us and create a list of your favourite movies!</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>REQUEST</th>
+                <th>URL</th>
+                <th>HTTP METHOD</th>
+                <th>Query parameters</th>
+                <th>Request body format</th>
+                <th>Response body data format</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>Login</td>
+                <td>/login</td>
+                <td>POST</td>
+                <td>None</td>
+                <td>None</td>
+                <td>None</td>
+            </tr>
+
+            <tr>
+                <td>Get movie list </td>
+                <td>/movies</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>None</td>
+                <td>JSON object holding data about all movies</td>
+            </tr>
+
+            <tr>
+                <td>Get users list </td>
+                <td>/users</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>None</td>
+                <td>JSON object holding data about all users</td>
+            </tr>
+
+
+            <tr>
+                <td>Get data about movie by title </td>
+                <td>/movies/:Title</td>
+                <td>GET</td>
+                <td>:title</td>
+                <td>None</td>
+                <td>JSON object holding data:
+                    {"title, description, genre, director, actor, image URL, featured"} </td>
+            </tr>
+
+            <tr>
+                <td>Get data about genre by name </td>
+                <td>/genres/:Name</td>
+                <td>GET</td>
+                <td>:name</td>
+                <td>None</td>
+                <td>JSON object of specific genre description</td>
+            </tr>
+
+            <tr>
+                <td>Get data about director by name </td>
+                <td>/directors/:Name</td>
+                <td>GET</td>
+                <td>:Name</td>
+                <td>None</td>
+                <td>JSON object holding data:
+                    {"name, bio, birthyear, deathyear"} </td>
+            </tr>
+
+            <tr>
+                <td>Register new user</td>
+                <td>/users</td>
+                <td>POST</td>
+                <td>None</td>
+                <td>JSON object holding data:
+                    {"name, password, email, favorite"} </td>
+                <td>JSON object holding data:
+                    {"name, password, email, favorite"} </td>
+            </tr>
+
+            <tr>
+                <td>Update user's username</td>
+                <td>/users/:username</td>
+                <td>PUT</td>
+                <td>:username</td>
+                <td>None</td>
+                <td>JSON object holding data:
+                    {"username, password, email, favorite"} </td>
+            </tr>
+
+            <tr>
+                <td>User add movie to favourites</td>
+                <td>/users/:username/Movies/:movieID</td>
+                <td>POST</td>
+                <td>:username and :movieID</td>
+                <td>JSON object holding:
+                    {"username": "", "movieID":""}
+                </td>
+                <td>JSON object holding data:
+                    {"username, favorite"}
+                </td>
+            </tr>
+
+            <tr>
+                <td>User delete movie from favourites </td>
+                <td>/users/:username/Movies/:movieID</td>
+                <td>DELETE</td>
+                <td>:username and :movieID</td>
+                <td>JSON object holding:
+                    {"username": "", "movieID": ""}
+                </td>
+                <td>JSON object holding data:
+                    {"username, favorite"}
+                </td>
+            </tr>
+
+            <tr>
+                <td>User to be deleted</td>
+                <td>/users/:username</td>
+                <td>DELETE</td>
+                <td>:username</td>
+                <td>None</td>
+                <td>Message indicating user successfully deleted</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+
+</body>
+
+</html>
