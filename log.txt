@@ -109,3 +109,4 @@ Timestamp: Tue Jul 04 2023 15:06:14 GMT+0800 (Singapore Standard Time)
 ::1 - - [05/Jul/2023:04:16:27 +0000] "POST /users/ HTTP/1.1" 200 119 "-" "PostmanRuntime/7.32.3"
 ::1 - - [05/Jul/2023:04:16:30 +0000] "DELETE /users/ HTTP/1.1" 404 148 "-" "PostmanRuntime/7.32.3"
 ::1 - - [05/Jul/2023:04:16:34 +0000] "DELETE /users/test2 HTTP/1.1" 200 17 "-" "PostmanRuntime/7.32.3"
+::1 - - [05/Jul/2023:04:44:45 +0000] "POST /users HTTP/1.1" 200 175 "-" "PostmanRuntime/7.32.3"
