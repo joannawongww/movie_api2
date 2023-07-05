@@ -10,10 +10,8 @@ const Models = require('./models.js');
 
 const Movies = Models.Movie;
 const Users = Models.User;
-const Genres = Models.Genre;
-const Directors = Models.Director;
 
-//allows Mongoose connect to database to perform CRUD
+// //allows Mongoose connect to database to perform CRUD
 mongoose.connect('mongodb://127.0.0.1:27017/cfDB', {
     useNewUrlParser: true, 
     useUnifiedTopology: true
@@ -142,7 +140,7 @@ app.get('/documentation', (req, res) => {
 app.get('/movies', (req, res) => {
     Movies.find()
         .then((movies) => {
-            res.status(201).json(movies);
+            res.status(200).json(movies);
         })
         .catch( (err) => {
             console.error(err);
@@ -154,7 +152,7 @@ app.get('/movies', (req, res) => {
 app.get('/users', (req, res) => {
     Users.find()
         .then((users) => {
-            res.status(201).json(users);
+            res.status(200).json(users);
         })
         .catch( (err) => {
             console.error(err);
@@ -182,12 +180,13 @@ app.get('/movies/genre/:genreName', (req, res) => {
         res.json(movie.Genre);
     })
     .catch((err)=> {
-        console.error(err); 
+        console.error(err);
+        res.status(500).send('Error: ' + err);
     });
-})
+});
 
 //READ - return director data by name
-app.get('/movies/directors/:directorName', (req, res) => {
+app.get('movies/director/:directorName', (req, res) => {
     Movies.findOne( {'Director.Name': req.params.directorName})
     .then( (movie) => {
         res.json(movie.Director);
@@ -197,6 +196,18 @@ app.get('/movies/directors/:directorName', (req, res) => {
         res.status(500).send('Error: ' + err);
     });
 });
+
+// exercise 2.5
+// app.get('/movies/directors/:directorName', (req,res) => {
+//     const {directorName} = req.params;
+//     const movie = movies.find(mov => mov.Director.name === directorName)
+
+//     if (director) {
+//         res.status(200).json(director); 
+//     }else{
+//         res.status(400).send('no such director')
+//     }
+// })
 
 
 // CREATE - new user register
@@ -213,7 +224,7 @@ app.post('/users', (req, res) => {
                     Birthday: req.body.Birthday
         })
         .then((user) => {
-            res.status(201).json(user)
+            res.status(200).json(user)
         })
         .catch( (error) => {
             console.error(error);
@@ -227,62 +238,77 @@ app.post('/users', (req, res) => {
 });
 
 // UPDATE - user update username
-app.put('/users/:Username', (req, res) => {
-    Users.findOneAndUpdate (
-        { Username: req.params.Username},
-        {
-            $set: {
-                Username: req.body.Username,
-                Password: req.body.Password,
-                Email: req.body.Email,
-                Birthday: req.body.Birthday
+app.put('/users/:Username', async function(req, res) {
+    let updatedUser;
+    try {
+        updatedUser = await Users.findOneAndUpdate(
+            { 
+                Username: req.params.Username
+            }, {
+                $set: {
+                    Username: req.body.Username,
+                    Password: req.body.Password,
+                    Email: req.body.Email,
+                    Birthday: req.body.Birthday
+                }
             },
-        },
-        { new: true },
-        (err, updatedUser) => {
-            if (err) {
-                console.error(err);
-                res.status(500).send('Error: ' + err);
-            } else {
-                res.json(updatedUser);
-            }
-        }
-    );
-});
+            {
+                new: true
+            });
+    } 
+    catch(err) {
+        console.error(err);
+        return res.status(500).send('Error: ' + err);
+    }
+    return res.json(updatedUser);
+})
 
 // CREATE - user add movie to favourites
-app.post('/users/:Username/movies/:MovieID', (req, res) => {
-    Users.findOneAndUpdate( {Username: req.params.Username},
-        {$push: {Favorite: req.params.MovieID}},
-        {new: true},
-        (err, updatedUser) => {
-            if (err) {
-                console.error(err);
-                res.status(500).send('Error: ' + err);
-            } else {
-                res.json(updatedUser);
-            }
-        }  
-        
-    );
-});
+app.put('/users/:Username/movies/:MovieID', async function(req, res) {
+    let updatedUser;
+    try {
+        updatedUser = await Users.findOneAndUpdate(
+            { 
+                Username: req.params.Username
+            }, {
+                $push: {
+                    Favorite: req.params.MovieID
+                }
+            },
+            {
+                new: true
+            });
+    } 
+    catch(err) {
+        console.error(err);
+        return res.status(500).send('Error: ' + err);
+    }
+    return res.json(req.params.MovieID + 'has been added to ' + req.params.Username + ' list of favorite movies');
+})
 
 // DELETE - users remove movie from favourites
-app.delete('/users/:Username/Movies/:MovieID', (req, res) => {
-    Users.findOneAndUpdate( {Username: req.params.Username},
-        {$pull: {Favorite: req.params.MovieID}},
-        {new: true},
-        (err, updatedUser) => {
-            if (err) {
-                console.error(err);
-                res.status(500).send('Error: ' + err);
-            } else {
-                res.json(updatedUser);
-            }
-        }  
-        
-    );
-});
+app.delete('/users/:Username/movies/:MovieID', async function(req, res) {
+    let updatedUser;
+    try {
+        updatedUser = await Users.findOneAndUpdate(
+            { 
+                Username: req.params.Username
+            }, {
+                $pull: {
+                    Favorite: req.params.MovieID
+                }
+            },
+            {
+                new: true
+            });
+    } 
+    catch(err) {
+        console.error(err);
+        return res.status(500).send('Error: ' + err);
+    }
+    return res.json(req.params.MovieID + 'has been removed from ' + req.params.Username + ' list of favorite movies');
+})
+
 // DELETE - user deregister
 app.delete('/users/:Username', (req, res) => {
     Users.findOneAndRemove ({ Username: req.params.Username})
