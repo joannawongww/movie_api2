@@ -150,7 +150,7 @@ app.use(morgan('combined', {stream: accessLogStream}));
 
 // ];
 
-app.get('/', passport.authenticate('jwt', {session:false}), (req,res) => {
+app.get('/', (req,res) => {
     res.send('Welcome to myFlix!');
 });
 
