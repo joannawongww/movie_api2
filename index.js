@@ -23,7 +23,9 @@ app.use(bodyParser.urlencoded( {extended: true}));
 
 app.use(express.static('public'));
 
-let auth = require('./auth')(app);
+let auth = require('./auth')(app); //import auth.js and ensure Express available in auth file.
+const passport = ('passport');
+require ('./passport');
 
 //create write stream
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags:'a'});
