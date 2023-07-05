@@ -186,7 +186,7 @@ app.get('/movies/genre/:genreName', (req, res) => {
 });
 
 //READ - return director data by name
-app.get('movies/director/:directorName', (req, res) => {
+app.get('/movies/director/:directorName', (req, res) => {
     Movies.findOne( {'Director.Name': req.params.directorName})
     .then( (movie) => {
         res.json(movie.Director);
@@ -196,18 +196,6 @@ app.get('movies/director/:directorName', (req, res) => {
         res.status(500).send('Error: ' + err);
     });
 });
-
-// exercise 2.5
-// app.get('/movies/directors/:directorName', (req,res) => {
-//     const {directorName} = req.params;
-//     const movie = movies.find(mov => mov.Director.name === directorName)
-
-//     if (director) {
-//         res.status(200).json(director); 
-//     }else{
-//         res.status(400).send('no such director')
-//     }
-// })
 
 
 // CREATE - new user register
