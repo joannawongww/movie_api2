@@ -263,7 +263,14 @@ app.post('/users',
 });
 
 // UPDATE - user update username
-app.put('/users/:Username', passport.authenticate('jwt', {session:false}), async function(req, res) {
+app.put('/users/:Username', 
+    [
+    check('Username', 'Username is required').isLength({min: 5}),
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+    check('Password', 'Password is required').not().isEmpty(),
+    check('Email', 'Email does not appear to be valid').isEmail()
+  ],
+    passport.authenticate('jwt', {session:false}), async function(req, res) {
     let updatedUser;
     try {
         updatedUser = await Users.findOneAndUpdate(
