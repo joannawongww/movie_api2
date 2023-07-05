@@ -14,7 +14,7 @@ const Genres = Models.Genre;
 const Directors = Models.Director;
 
 //allows Mongoose connect to database to perform CRUD
-mongoose.connect('mongodb://localhost:27017/cfDB', {
+mongoose.connect('mongodb://127.0.0.1:27017/cfDB', {
     useNewUrlParser: true, 
     useUnifiedTopology: true
 });
@@ -164,8 +164,8 @@ app.get('/users', (req, res) => {
 
 
 //READ - find movie by title
-app.get('/movies/:title', (req, res) => {
-    Movies.findOne( {title: req.params.title})
+app.get('/movies/:Title', (req, res) => {
+    Movies.findOne( {Title: req.params.Title})
     .then((movie) => {
         res.json(movie);
     })
@@ -176,22 +176,21 @@ app.get('/movies/:title', (req, res) => {
 });
 
 //READ - return genre data by name
-app.get('/genre/:Name', (req, res) => {
-    Genres.findOne( {Name: req.params.Name})
-    .then( (genre) => {
-        res.json(genre.Description);
+app.get('/movies/genre/:genreName', (req, res) => {
+    Movies.findOne( {'Genre.Name': req.params.genreName})
+    .then( (movie) => {
+        res.json(movie.Genre);
     })
     .catch((err)=> {
-        console.error(err);
-        res.status(500).send('Error: ' + err);
+        console.error(err); 
     });
-});
+})
 
 //READ - return director data by name
-app.get('/director/:Name', (req, res) => {
-    Directors.findOne( {Name: req.params.Name})
-    .then( (director) => {
-        res.json(director);
+app.get('/movies/directors/:directorName', (req, res) => {
+    Movies.findOne( {'Director.Name': req.params.directorName})
+    .then( (movie) => {
+        res.json(movie.Director);
     })
     .catch((err)=> {
         console.error(err);
@@ -252,7 +251,7 @@ app.put('/users/:Username', (req, res) => {
 });
 
 // CREATE - user add movie to favourites
-app.post('/users/:Username/Movies/:MovieID', (req, res) => {
+app.post('/users/:Username/movies/:MovieID', (req, res) => {
     Users.findOneAndUpdate( {Username: req.params.Username},
         {$push: {Favorite: req.params.MovieID}},
         {new: true},

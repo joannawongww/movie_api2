@@ -21,3 +21,8 @@ Timestamp: Tue Jul 04 2023 15:06:14 GMT+0800 (Singapore Standard Time)
 ::1 - - [05/Jul/2023:02:58:32 +0000] "POST /users/ HTTP/1.1" 201 66 "-" "PostmanRuntime/7.32.3"
 ::1 - - [05/Jul/2023:03:04:09 +0000] "GET /documentation HTTP/1.1" 200 4500 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
 ::1 - - [05/Jul/2023:03:05:16 +0000] "GET /movies/directors/director1 HTTP/1.1" 200 58 "-" "PostmanRuntime/7.32.3"
+::1 - - [05/Jul/2023:03:29:42 +0000] "GET /movies/ HTTP/1.1" 500 81 "-" "PostmanRuntime/7.32.3"
+::1 - - [05/Jul/2023:03:30:02 +0000] "GET /movies/ HTTP/1.1" 201 5537 "-" "PostmanRuntime/7.32.3"
+::1 - - [05/Jul/2023:03:30:30 +0000] "GET /users HTTP/1.1" 201 1239 "-" "PostmanRuntime/7.32.3"
+::1 - - [05/Jul/2023:03:30:38 +0000] "GET /movies/Mulan HTTP/1.1" 200 4 "-" "PostmanRuntime/7.32.3"
+::1 - - [05/Jul/2023:03:30:52 +0000] "GET /movies/mulan HTTP/1.1" 200 4 "-" "PostmanRuntime/7.32.3"
