@@ -12,7 +12,12 @@ const Movies = Models.Movie;
 const Users = Models.User;
 
 // //allows Mongoose connect to database to perform CRUD
-mongoose.connect('mongodb://127.0.0.1:27017/cfDB', {
+// mongoose.connect('mongodb://127.0.0.1:27017/cfDB', {
+//     useNewUrlParser: true, 
+//     useUnifiedTopology: true
+// });
+
+mongoose.connect(process.env.CONNECTION_URI, {
     useNewUrlParser: true, 
     useUnifiedTopology: true
 });
