@@ -23,6 +23,8 @@ app.use(bodyParser.urlencoded( {extended: true}));
 
 app.use(express.static('public'));
 
+let auth = require('./auth')(app);
+
 //create write stream
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags:'a'});
 
