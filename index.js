@@ -18,14 +18,13 @@ mongoose.connect('mongodb://127.0.0.1:27017/cfDB', {
 });
 
 const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded( {extended: true}));
-
 app.use(express.static('public'));
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded( {extended: true}));
 let auth = require('./auth')(app); //import auth.js and ensure Express available in auth file.
-const passport = ('passport');
-require ('./passport');
+const passport = require('passport');
+require('./passport');
 
 //create write stream
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags:'a'});
@@ -141,7 +140,7 @@ app.get('/documentation', (req, res) => {
 
 
 //READ list of movies
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', {session:false}), (req, res) => {
     Movies.find()
         .then((movies) => {
             res.status(200).json(movies);
