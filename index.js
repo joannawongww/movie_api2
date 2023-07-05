@@ -266,12 +266,16 @@ app.post('/users',
 app.put('/users/:Username', 
     [
     check('Username', 'Username is required').isLength({min: 5}),
-    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-    check('Password', 'Password is required').not().isEmpty(),
-    check('Email', 'Email does not appear to be valid').isEmail()
+    check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric()
   ],
     passport.authenticate('jwt', {session:false}), async function(req, res) {
-    let updatedUser;
+        let errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+          return res.status(422).json({ errors: errors.array() });
+        }
+
+        let updatedUser;
     try {
         updatedUser = await Users.findOneAndUpdate(
             { 
