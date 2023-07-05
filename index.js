@@ -20,6 +20,24 @@ mongoose.connect('mongodb://127.0.0.1:27017/cfDB', {
 const app = express();
 app.use(express.static('public'));
 
+//app uses CORS, set to allow requests from all origins
+const cors = require('cors');
+app.use(cors());
+
+//for certain origins
+// let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+
+// app.use(cors({
+//   origin: (origin, callback) => {
+//     if(!origin) return callback(null, true);
+//     if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+//       let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+//       return callback(new Error(message ), false);
+//     }
+//     return callback(null, true);
+//   }
+// }));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended: true}));
 let auth = require('./auth')(app); //import auth.js and ensure Express available in auth file.
