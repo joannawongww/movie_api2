@@ -32,7 +32,7 @@ const cors = require('cors');
 app.use(cors());
 
 //for certain origins
-// let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+// let allowedOrigins = ['http://localhost:8080', 'https://jwww-myflix.netlify.app/'];
 
 // app.use(cors({
 //   origin: (origin, callback) => {
